@@ -1,0 +1,27 @@
+{
+  "name": "validation-util",
+  "version": "0.0.3",
+  "description": "Validation utilities",
+  "main": "./lib/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build:lib": "tsc",
+    "clean:lib": "rimraf lib"
+  },
+  "devDependencies": {
+    "tslint": "5.10.0",
+    "typescript": "^3.3.3333"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/common-ts/validation-util"
+  },
+  "keywords": [
+    "validation",
+    "validation util",
+    "validation utilities"
+  ]
+}
