@@ -1,10 +1,14 @@
+export interface Phones {
+  [key: string]: string;
+}
 // tslint:disable-next-line:class-name
 export class resources {
-  static phonecodes: any = null;
+  static phonecodes: Phones = null;
   static email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/i;
+  static phone = /^\d{5,14}$/;
   // private static _phoneRegex = /^[1]?[-. ]?(\(?([0-9]{3})\)?)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   // private static _phoneRegex2 = /^[+][1][-. ]?(\(?([0-9]{3})\)?)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  static password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+  static password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   static url = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
   static digit = /^\d+$/;
   static amount = /^[0-9]{0,15}(?:\.[0-9]{1,3})?$/; // const regExp = /\d+\.\d+/;
@@ -26,13 +30,13 @@ export class tel {
       return false;
     }
     if (str.charAt(0) !== '+') {
-      return isDigitOnly(str);
+      return resources.phone.test(str);
     } else {
       const phoneNumber = str.substring(1);
       if (!resources.phonecodes) {
-        return isDigitOnly(phoneNumber);
+        return resources.phone.test(phoneNumber);
       } else {
-        if (isDigitOnly(phoneNumber)) {
+        if (resources.phone.test(phoneNumber)) {
           for (let degit = 1; degit <= 3; degit++) {
             const countryCode = phoneNumber.substr(0, degit);
             if (countryCode in resources.phonecodes) {
@@ -50,7 +54,12 @@ export class tel {
     return tel.isPhone(fax);
   }
 }
-
+export function isPhone(str: string): boolean {
+  return tel.isPhone(str);
+}
+export function isFax(str: string): boolean {
+  return tel.isFax(str);
+}
 export function isValidPassword(password: string): boolean {
   return resources.password.test(password);
 }
@@ -138,24 +147,18 @@ export function isDigitOnly(v: string): boolean {
   }
   return resources.digit.test(v);
 }
-
 export function isDashDigit(v: string): boolean {
   return resources.digitAndDash.test(v);
 }
-
 export function isCheckNumber(v: string): boolean {
   return resources.checkNumber.test(v);
 }
-
 export function isAmountNumber(v: string): boolean {
   return resources.amount.test(v);
 }
-
 export function isUSPostalCode(postcode: string): boolean {
   return resources.usPostcode.test(postcode);
 }
-
 export function isCAPostalCode(postcode: string): boolean {
-  // /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
   return resources.caPostcode.test(postcode);
 }

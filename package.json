@@ -1,6 +1,6 @@
 {
   "name": "validation-util",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Validation utilities",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
