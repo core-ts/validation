@@ -3,7 +3,7 @@ export interface Phones {
 }
 // tslint:disable-next-line:class-name
 export class resources {
-  static phonecodes: Phones;
+  static phonecodes?: Phones;
   static email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/i;
   static phone = /^\d{5,14}$/;
   // private static _phoneRegex = /^[1]?[-. ]?(\(?([0-9]{3})\)?)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
