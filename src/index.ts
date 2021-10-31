@@ -25,7 +25,7 @@ export class resources {
 
 // tslint:disable-next-line:class-name
 export class tel {
-  static isPhone(str: string): boolean {
+  static isPhone(str: string|null|undefined): boolean {
     if (!str || str.length === 0 || str === '+') {
       return false;
     }
@@ -50,64 +50,61 @@ export class tel {
       }
     }
   }
-  static isFax(fax: string): boolean {
+  static isFax(fax: string|null|undefined): boolean {
     return tel.isPhone(fax);
   }
 }
-export function isPhone(str: string): boolean {
+export function isPhone(str: string|null|undefined): boolean {
   return tel.isPhone(str);
 }
-export function isFax(str: string): boolean {
+export function isFax(str: string|null|undefined): boolean {
   return tel.isFax(str);
 }
 export function isValidPassword(password: string): boolean {
   return resources.password.test(password);
 }
-
-export function isIPv6(ipv6: string): boolean {
+export function isIPv6(ipv6: string|null|undefined): boolean {
   if (!ipv6 || ipv6.length === 0) {
     return false;
   }
   return resources.ipv6.test(ipv6);
 }
-export function isIPv4(ipv4: string): boolean {
+export function isIPv4(ipv4: string|null|undefined): boolean {
   if (!ipv4 || ipv4.length === 0) {
     return false;
   }
   return resources.ipv4.test(ipv4);
 }
-
-export function isEmpty(str: string): boolean {
+export function isEmpty(str: string|null|undefined): boolean {
   return (!str || str === '');
 }
-
-export function isValidPattern(patternStr: string, modifier: string, value: string): boolean {
-  if (!isEmpty(patternStr)) {
-    if (!modifier) {
-      modifier = 'g';
+export function isValidPattern(v: string, pattern: string, flags?: string|null): boolean {
+  if (!isEmpty(pattern)) {
+    if (!flags) {
+      flags = 'g';
     }
-    const pattern = new RegExp(patternStr, modifier);
-    return pattern.test(value);
+    const p = new RegExp(pattern, flags);
+    return p.test(v);
   } else {
     return false;
   }
 }
-export function isUrl(url: string): boolean {
+export function isUrl(url: string|null|undefined): boolean {
+  if (!url || url.length === 0) {
+    return false;
+  }
   return resources.url.test(url);
 }
-
-export function isEmail(email: string): boolean {
+export function isEmail(email: string|null|undefined): boolean {
   if (!email || email.length === 0) {
     return false;
   }
   return resources.email.test(email);
 }
-
 export function isPercentage(v: string): boolean {
   return resources.percentage.test(v);
 }
-
-export function isTime4(str: string): boolean {
+export function isTime4(str: string|null|undefined): boolean {
   if (!str || str.length !== 4) {
     return false;
   }
@@ -122,12 +119,10 @@ export function isTime4(str: string): boolean {
     return true;
   }
 }
-
 export function isValidCode(str: string): boolean {
   return resources.digitAndChar.test(str);
 }
-
-export function isDashCode(str: string): boolean {
+export function isDashCode(str: string|null|undefined): boolean {
   if (!str || str.length === 0) {
     return false;
   }
@@ -140,8 +135,7 @@ export function isDashCode(str: string): boolean {
   }
   return true;
 }
-
-export function isDigitOnly(v: string): boolean {
+export function isDigitOnly(v: string|null|undefined): boolean {
   if (!v) {
     return false;
   }
