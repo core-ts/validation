@@ -1,7 +1,7 @@
 {
-  "name": "validation-util",
-  "version": "0.0.5",
-  "description": "Validation utilities",
+  "name": "validation-core",
+  "version": "0.0.2",
+  "description": "Validation core",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
   "scripts": {
@@ -17,9 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/common-ts/validation-util"
+    "url": "git@github.com/core-ts/validation"
   },
   "keywords": [
+    "validation core",
+    "core validation",
     "validation",
     "validation util",
     "validation utilities"
