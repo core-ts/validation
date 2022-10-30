@@ -29,14 +29,15 @@ export class tel {
     if (!str || str.length === 0 || str === '+') {
       return false;
     }
+    const r = new RegExp(resources.phone);
     if (str.charAt(0) !== '+') {
-      return resources.phone.test(str);
+      return r.test(str);
     } else {
       const phoneNumber = str.substring(1);
       if (!resources.phonecodes) {
-        return resources.phone.test(phoneNumber);
+        return r.test(phoneNumber);
       } else {
-        if (resources.phone.test(phoneNumber)) {
+        if (r.test(phoneNumber)) {
           for (let degit = 1; degit <= 3; degit++) {
             const countryCode = phoneNumber.substr(0, degit);
             if (countryCode in resources.phonecodes) {
@@ -61,19 +62,22 @@ export function isFax(str: string|null|undefined): boolean {
   return tel.isFax(str);
 }
 export function isValidPassword(password: string): boolean {
-  return resources.password.test(password);
+  const r = new RegExp(resources.password);
+  return r.test(password);
 }
 export function isIPv6(ipv6: string|null|undefined): boolean {
   if (!ipv6 || ipv6.length === 0) {
     return false;
   }
-  return resources.ipv6.test(ipv6);
+  const r = new RegExp(resources.ipv6);
+  return r.test(ipv6);
 }
 export function isIPv4(ipv4: string|null|undefined): boolean {
   if (!ipv4 || ipv4.length === 0) {
     return false;
   }
-  return resources.ipv4.test(ipv4);
+  const r = new RegExp(resources.ipv4);
+  return r.test(ipv4);
 }
 export function isEmpty(str: string|null|undefined): boolean {
   return (!str || str === '');
@@ -93,16 +97,19 @@ export function isUrl(url: string|null|undefined): boolean {
   if (!url || url.length === 0) {
     return false;
   }
-  return resources.url.test(url);
+  const r = new RegExp(resources.url);
+  return r.test(url);
 }
 export function isEmail(email: string|null|undefined): boolean {
   if (!email || email.length === 0) {
     return false;
   }
-  return resources.email.test(email);
+  const r = new RegExp(resources.email);
+  return r.test(email);
 }
 export function isPercentage(v: string): boolean {
-  return resources.percentage.test(v);
+  const r = new RegExp(resources.percentage);
+  return r.test(v);
 }
 export function isTime4(str: string|null|undefined): boolean {
   if (!str || str.length !== 4) {
@@ -120,7 +127,8 @@ export function isTime4(str: string|null|undefined): boolean {
   }
 }
 export function isValidCode(str: string): boolean {
-  return resources.digitAndChar.test(str);
+  const r = new RegExp(resources.digitAndChar);
+  return r.test(str);
 }
 export function isDashCode(str: string|null|undefined): boolean {
   if (!str || str.length === 0) {
@@ -139,20 +147,26 @@ export function isDigitOnly(v: string|null|undefined): boolean {
   if (!v) {
     return false;
   }
-  return resources.digit.test(v);
+  const r = new RegExp(resources.digit);
+  return r.test(v);
 }
 export function isDashDigit(v: string): boolean {
-  return resources.digitAndDash.test(v);
+  const r = new RegExp(resources.digitAndDash);
+  return r.test(v);
 }
 export function isCheckNumber(v: string): boolean {
-  return resources.checkNumber.test(v);
+  const r = new RegExp(resources.checkNumber);
+  return r.test(v);
 }
 export function isAmountNumber(v: string): boolean {
-  return resources.amount.test(v);
+  const r = new RegExp(resources.amount);
+  return r.test(v);
 }
 export function isUSPostalCode(postcode: string): boolean {
-  return resources.usPostcode.test(postcode);
+  const r = new RegExp(resources.usPostcode);
+  return r.test(postcode);
 }
 export function isCAPostalCode(postcode: string): boolean {
-  return resources.caPostcode.test(postcode);
+  const r = new RegExp(resources.caPostcode);
+  return r.test(postcode);
 }
