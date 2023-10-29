@@ -15,6 +15,7 @@ export class resources {
   static percentage = /^[1-9][0-9]?$|^100$/;
   static digitAndDash = /^[0-9-]*$/;
   static digitAndChar = /^\w*\d*$/;
+  static lowerDashCode = '^(?=.*[a-z])[a-z0-9_]{1,100}$';
   static checkNumber = /^\d{0,8}$/;
   static ipv4 = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
   static ipv6 = /^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/;
@@ -154,6 +155,10 @@ export function isDashDigit(v: string): boolean {
   const r = new RegExp(resources.digitAndDash);
   return r.test(v);
 }
+export function isLowerDashCode(v: string): boolean {
+  const p = new RegExp(resources.lowerDashCode, 'g');
+  return p.test(v);
+}
 export function isCheckNumber(v: string): boolean {
   const r = new RegExp(resources.checkNumber);
   return r.test(v);
@@ -169,4 +174,8 @@ export function isUSPostalCode(postcode: string): boolean {
 export function isCAPostalCode(postcode: string): boolean {
   const r = new RegExp(resources.caPostcode);
   return r.test(postcode);
+}
+export function isDate(v: string): boolean {
+  const date = new Date(v)?.getDate();
+  return !isNaN(date);
 }
