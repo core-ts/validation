@@ -179,3 +179,6 @@ export function isDate(v: string): boolean {
   const date = new Date(v)?.getDate();
   return !isNaN(date);
 }
+export function isValidDate(date: Date): boolean {
+  return !(!(date instanceof Date) || date.toString() === "Invalid Date")
+}

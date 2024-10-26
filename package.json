@@ -1,6 +1,6 @@
 {
   "name": "validation-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validation core",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
