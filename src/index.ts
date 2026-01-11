@@ -114,12 +114,13 @@ export function isPhone(str: string): boolean {
 export function isFax(str: string): boolean {
   return resources.isFax(str)
 }
+const st = "string"
 export function isStrings(s?: string[]): boolean {
   if (!s || s.length === 0) {
     return true
   }
   for (const x of s) {
-    if (typeof x !== "string") {
+    if (typeof x !== st) {
       return false
     }
   }
@@ -248,25 +249,6 @@ export function isValidPrecision(n: number, precision: number, scale?: number): 
   const s3 = s.substring(0, i)
   return s3.length <= precision - scale
 }
-export function format(...args: any[]): string {
-  let formatted = args[0]
-  if (!formatted || formatted === "") {
-    return ""
-  }
-  if (args.length > 1 && Array.isArray(args[1])) {
-    const params = args[1]
-    for (let i = 0; i < params.length; i++) {
-      const regexp = new RegExp("\\{" + i + "\\}", "gi")
-      formatted = formatted.replace(regexp, params[i])
-    }
-  } else {
-    for (let i = 1; i < args.length; i++) {
-      const regexp = new RegExp("\\{" + (i - 1) + "\\}", "gi")
-      formatted = formatted.replace(regexp, args[i])
-    }
-  }
-  return formatted
-}
 function createError(path: string, name: string, code: string | undefined, msg: string, param?: string | number | Date): ErrorMessage {
   let x = name
   if (path && path.length > 0) {
@@ -314,11 +296,11 @@ export function addDays(date: Date, number: number): Date {
 }
 function handleArrayMinMax(v: number, attr: Attribute, path: string, errors: ErrorMessage[], key: string, resource?: StringMap): void {
   if (attr.min && typeof attr.min === "number" && attr.min > 0 && v < attr.min) {
-    const msg = createMessage(key, "min", "error_array_min", resource, attr.resource, attr.min)
+    const msg = createMessage(key, "min", "error_array_min", resource, attr.resource, attr.min.toString())
     errors.push(createError(path, key, "min", msg, attr.min))
   }
   if (attr.max && typeof attr.max === "number" && attr.max > 0 && v > attr.max) {
-    const msg = createMessage(key, "max", "error_array_max", resource, attr.resource, attr.max)
+    const msg = createMessage(key, "max", "error_array_max", resource, attr.resource, attr.max.toString())
     errors.push(createError(path, key, "max", msg, attr.max))
   }
 }
@@ -328,25 +310,25 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
     na = ""
   }
   if (typeof v === "number") {
-    if (attr.min !== undefined) {
+    if (attr.min != undefined) {
       if (v < (attr.min as number)) {
-        const msg = createMessage(key, "min", "error_min", resource, attr.resource, attr.min)
+        const msg = createMessage(key, "min", "error_min", resource, attr.resource, attr.min.toString())
         errors.push(createError(path, na, "min", msg, attr.min))
       }
-    } else if (attr.gt !== undefined) {
+    } else if (attr.gt != undefined) {
       if (v <= (attr.gt as number)) {
-        const msg = createMessage(key, "gt", "error_gt", resource, attr.resource, attr.gt)
+        const msg = createMessage(key, "gt", "error_gt", resource, attr.resource, attr.gt.toString())
         errors.push(createError(path, na, "gt", msg, attr.gt))
       }
     }
-    if (attr.max !== undefined) {
+    if (attr.max != undefined) {
       if (v > (attr.max as number)) {
-        const msg = createMessage(key, "max", "error_max", resource, attr.resource, attr.max)
+        const msg = createMessage(key, "max", "error_max", resource, attr.resource, attr.max.toString())
         errors.push(createError(path, na, "max", msg, attr.max))
       }
-    } else if (attr.lt !== undefined) {
+    } else if (attr.lt != undefined) {
       if (v >= (attr.lt as number)) {
-        const msg = createMessage(key, "lt", "error_lt", resource, attr.resource, attr.lt)
+        const msg = createMessage(key, "lt", "error_lt", resource, attr.resource, attr.lt.toString())
         errors.push(createError(path, na, "lt", msg, attr.lt))
       }
     }
@@ -355,7 +337,7 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
     if (attr.min) {
       if (attr.min instanceof Date) {
         if (t < attr.min.getTime()) {
-          const msg = createMessage(key, "min", "error_min_date", resource, attr.resource, attr.min)
+          const msg = createMessage(key, "min", "error_min_date", resource, attr.resource, attr.min.toString())
           errors.push(createError(path, na, "min", msg, attr.min))
         }
       } else {
@@ -392,7 +374,7 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
             const d = new Date(attr.min)
             attr.min = d
             if (t < d.getTime()) {
-              const msg = createMessage(key, "min", "error_min_date", resource, attr.resource, attr.min)
+              const msg = createMessage(key, "min", "error_min_date", resource, attr.resource, attr.min.toString())
               errors.push(createError(path, na, "min", msg, attr.min))
             }
             break
@@ -401,14 +383,14 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
     } else if (attr.gt) {
       if (attr.gt instanceof Date) {
         if (t <= attr.gt.getTime()) {
-          const msg = createMessage(key, "gt", "error_after", resource, attr.resource, attr.gt)
+          const msg = createMessage(key, "gt", "error_after", resource, attr.resource, attr.gt.toString())
           errors.push(createError(path, na, "gt", msg, attr.gt))
         }
       } else {
         const d = new Date(attr.gt)
         attr.gt = d
         if (t <= d.getTime()) {
-          const msg = createMessage(key, "gt", "error_after", resource, attr.resource, attr.gt)
+          const msg = createMessage(key, "gt", "error_after", resource, attr.resource, attr.gt.toString())
           errors.push(createError(path, na, "gt", msg, attr.gt))
         }
       }
@@ -416,7 +398,7 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
     if (attr.max) {
       if (attr.max instanceof Date) {
         if (t > attr.max.getTime()) {
-          const msg = createMessage(key, "max", "error_max_date", resource, attr.resource, attr.max)
+          const msg = createMessage(key, "max", "error_max_date", resource, attr.resource, attr.max.toString())
           errors.push(createError(path, na, "max", msg, attr.max))
         }
       } else {
@@ -453,7 +435,7 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
             const d = new Date(attr.max)
             attr.max = d
             if (t > d.getTime()) {
-              const msg = createMessage(key, "max", "error_max_date", resource, attr.resource, attr.max)
+              const msg = createMessage(key, "max", "error_max_date", resource, attr.resource, attr.max.toString())
               errors.push(createError(path, na, "max", msg, attr.max))
             }
             break
@@ -462,14 +444,14 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
     } else if (attr.lt) {
       if (attr.lt instanceof Date) {
         if (t >= attr.lt.getTime()) {
-          const msg = createMessage(key, "lt", "error_before", resource, attr.resource, attr.lt)
+          const msg = createMessage(key, "lt", "error_before", resource, attr.resource, attr.lt.toString())
           errors.push(createError(path, na, "lt", msg, attr.lt))
         }
       } else {
         const d = new Date(attr.lt)
         attr.lt = d
         if (t >= d.getTime()) {
-          const msg = createMessage(key, "lt", "error_before", resource, attr.resource, attr.lt)
+          const msg = createMessage(key, "lt", "error_before", resource, attr.resource, attr.lt.toString())
           errors.push(createError(path, na, "lt", msg, attr.lt))
         }
       }
@@ -477,6 +459,7 @@ function handleMinMax(v: number | Date, attr: Attribute, path: string, errors: E
   }
 }
 
+const msgMap = new Map<string, StringFormat>()
 export function createMessage(
   field: string,
   code: string,
@@ -494,7 +477,20 @@ export function createMessage(
   if (!um) {
     return code
   } else {
-    return format(um, p1, param)
+    let sf = msgMap.get(um)
+    if (!sf) {
+      sf = buildFormat(um)
+      msgMap.set(um, sf)
+    }
+    const obj: any = {"0": p1}
+    if (param) {
+      if (typeof param === st) {
+        obj["1"] = param
+      } else {
+        obj["1"] = "" + param
+      }
+    } 
+    return merge(obj, sf)
   }
 }
 function validateObject(
@@ -576,11 +572,11 @@ function validateObject(
                 }
                 if (ne) {
                   if (attr.min && typeof attr.min === "number" && attr.min > 0 && v.length < attr.min) {
-                    const msg = createMessage(key, "minlength", "error_minlength", resource, attr.resource, attr.min)
+                    const msg = createMessage(key, "minlength", "error_minlength", resource, attr.resource, attr.min.toString())
                     errors.push(createError(path, na, "minlength", msg, attr.min))
                   }
                   if (attr.length && attr.length > 0 && v.length > attr.length) {
-                    const msg = createMessage(key, "maxlength", "error_maxlength", resource, attr.resource, attr.length)
+                    const msg = createMessage(key, "maxlength", "error_maxlength", resource, attr.resource, attr.length.toString())
                     errors.push(createError(path, na, "maxlength", msg, attr.length))
                   }
                   if (attr.format) {
@@ -908,4 +904,78 @@ export class Validator<T> {
 }
 export function createValidator<T>(attributes: Attributes, allowUndefined?: boolean, max?: number): Validator<T> {
   return new Validator(attributes, allowUndefined, max)
+}
+
+export interface Parameter {
+  name: string;
+}
+export interface StringFormat {
+  texts: string[];
+  parameters: Parameter[];
+}
+export function isValidProperty(str: string): boolean {
+  for (let i = 0; i < str.length; i++) {
+    const chr = str.charAt(i);
+    if (!(chr >= '0' && chr <= '9')) {
+      return false;
+    }
+  }
+  return true;
+}
+export function buildFormat(str: string): StringFormat {
+  const texts = [];
+  const parameters = [];
+  let from = 0;
+  let from2 = 0;
+  let i = 0;
+  let j = 0;
+  while (true) {
+    i = str.indexOf('{', from2);
+    if (i >= 0) {
+      j = str.indexOf('}', i + 1);
+      if (j >= 0) {
+        const pro = str.substring(i + 1, j);
+        if (isValidProperty(pro)) {
+          let name: string;
+          name = pro;
+          texts.push(str.substring(from, i));
+          const parameter: Parameter = { name };
+          parameters.push(parameter);
+          from = j + 1;
+          from2 = from;
+        } else {
+          from2 = j + 1;
+        }
+      } else {
+        from = i + 1;
+        from2 = from;
+      }
+    } else {
+      texts.push(str.substring(from));
+      break;
+    }
+  }
+  const format: StringFormat = { texts, parameters };
+  return format;
+}
+export function valueOf(obj: any, key: string): any {
+  if (obj && obj.hasOwnProperty(key)) {
+    return obj[key];
+  }
+  return "";
+}
+export function merge(obj: any, format: StringFormat): string {
+  const results: string[] = [];
+  const parameters = format.parameters;
+  const texts = format.texts;
+  const length = parameters.length;
+  for (let i = 0; i < length; i++) {
+    results.push(texts[i]);
+    const p = valueOf(obj, parameters[i].name);
+    results.push(p);
+  }
+  if (texts[length] && texts[length].length > 0) {
+    results.push(texts[length]);
+  }
+  return results.join('')
 }
