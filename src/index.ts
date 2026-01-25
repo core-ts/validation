@@ -979,3 +979,62 @@ export function merge(obj: any, format: StringFormat): string {
   }
   return results.join('')
 }
+
+export function ddmmyy(d: Date, s: string): string {
+  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${getShortYear(d.getFullYear())}`
+}
+
+export function yymmdd(d: Date, s: string): string {
+  return `${getShortYear(d.getFullYear())}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
+}
+export function yyyymd(d: Date, s: string): string {
+  return `${d.getFullYear()}${s}${d.getMonth() + 1}${s}${d.getDate()}`
+}
+export function yyyymmdd(d: Date, s: string): string {
+  return `${d.getFullYear()}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
+}
+
+export function dmyyyy(d: Date, s: string): string {
+  return `${d.getDate()}${s}${d.getMonth() + 1}${s}${d.getFullYear()}`
+}
+export function ddmmyyyy(d: Date, s: string): string {
+  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${d.getFullYear()}`
+}
+
+export function mdyyyy(d: Date, s: string): string {
+  return `${d.getMonth() + 1}${s}${d.getDate()}${s}${d.getFullYear()}`
+}
+export function mmddyyyy(d: Date, s: string): string {
+  return `${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}${s}${d.getFullYear()}`
+}
+
+function pad(n: number): string {
+  return n < 10 ? "0" + n : n.toString()
+}
+export function getShortYear(y: number, full?: boolean): string {
+  if (y <= 99 && y >= -99) {
+    return y.toString()
+  }
+  const s = y.toString()
+  return s.substring(s.length - 2)
+}
+
+function y1(d: Date): string {
+  return yyyymmdd(d, "-")
+}
+function y2(d: Date): string {
+  return yyyymmdd(d, "/")
+}
+
+const fMap = new Map<string, (d: Date) => string>([
+  ["yyyy-MM-dd", y1],
+  ["yyyy/MM/dd", y2],
+])
+
+export function formatDate(d: Date, format: string): string {
+  let fn = fMap.get(format)
+  if (fn) {
+    return fn(d)
+  }
+  return yyyymmdd(d, "-")
+}
