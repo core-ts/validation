@@ -980,18 +980,14 @@ export function merge(obj: any, format: StringFormat): string {
   return results.join('')
 }
 
-export function ddmmyy(d: Date, s: string): string {
-  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${getShortYear(d.getFullYear())}`
-}
-
-export function yymmdd(d: Date, s: string): string {
-  return `${getShortYear(d.getFullYear())}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
-}
 export function yyyymd(d: Date, s: string): string {
   return `${d.getFullYear()}${s}${d.getMonth() + 1}${s}${d.getDate()}`
 }
 export function yyyymmdd(d: Date, s: string): string {
   return `${d.getFullYear()}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
+}
+export function yymmdd(d: Date, s: string): string {
+  return `${getShortYear(d.getFullYear())}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
 }
 
 export function dmyyyy(d: Date, s: string): string {
@@ -999,6 +995,9 @@ export function dmyyyy(d: Date, s: string): string {
 }
 export function ddmmyyyy(d: Date, s: string): string {
   return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${d.getFullYear()}`
+}
+export function ddmmyy(d: Date, s: string): string {
+  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${getShortYear(d.getFullYear())}`
 }
 
 export function mdyyyy(d: Date, s: string): string {
