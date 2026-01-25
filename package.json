@@ -1,6 +1,6 @@
 {
   "name": "xvalidators",
-  "version": "0.5.18",
+  "version": "0.5.19",
   "description": "Validate data",
   "main": "./lib/index.js",
   "types": "./src/index.ts",

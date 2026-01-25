@@ -980,60 +980,67 @@ export function merge(obj: any, format: StringFormat): string {
   return results.join('')
 }
 
-export function yyyymd(d: Date, s: string): string {
-  return `${d.getFullYear()}${s}${d.getMonth() + 1}${s}${d.getDate()}`
-}
-export function yyyymmdd(d: Date, s: string): string {
-  return `${d.getFullYear()}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
-}
-export function yymmdd(d: Date, s: string): string {
-  return `${getShortYear(d.getFullYear())}${s}${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}`
-}
+export function formatDate(d: Date | null | undefined, format?: string): string {
+  if (!d || !format) {
+    return ""
+  }
+  const y = d.getFullYear()
+  const m = d.getMonth() + 1
+  const day = d.getDate()
 
-export function dmyyyy(d: Date, s: string): string {
-  return `${d.getDate()}${s}${d.getMonth() + 1}${s}${d.getFullYear()}`
-}
-export function ddmmyyyy(d: Date, s: string): string {
-  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${d.getFullYear()}`
-}
-export function ddmmyy(d: Date, s: string): string {
-  return `${pad(d.getDate())}${s}${pad(d.getMonth() + 1)}${s}${getShortYear(d.getFullYear())}`
-}
+  let out = ""
+  let i = 0
 
-export function mdyyyy(d: Date, s: string): string {
-  return `${d.getMonth() + 1}${s}${d.getDate()}${s}${d.getFullYear()}`
-}
-export function mmddyyyy(d: Date, s: string): string {
-  return `${pad(d.getMonth() + 1)}${s}${pad(d.getDate())}${s}${d.getFullYear()}`
-}
+  while (i < format.length) {
+    const c = format.charCodeAt(i)
 
+    // yyyy / yy
+    if (c === 121 /* y */) {
+      const len = count(format, i, 121)
+      if (len >= 4) {
+        out += y.toString()
+        i += 4
+      } else {
+        out += shortYear(y)
+        i += 2
+      }
+      continue
+    }
+
+    // MM / M
+    if (c === 77 /* M */) {
+      const len = count(format, i, 77)
+      out += len >= 2 ? pad(m) : m.toString()
+      i += len >= 2 ? 2 : 1
+      continue
+    }
+
+    // dd / d
+    if (c === 100 /* d */) {
+      const len = count(format, i, 100)
+      out += len >= 2 ? pad(day) : day.toString()
+      i += len >= 2 ? 2 : 1
+      continue
+    }
+
+    // literal char
+    out += format[i]
+    i++
+  }
+  return out
+}
+function shortYear(y: number): string {
+  return (y % 100 + 100) % 100 < 10
+    ? "0" + ((y % 100 + 100) % 100)
+    : "" + ((y % 100 + 100) % 100)
+}
+function count(s: string, i: number, ch: number): number {
+  let n = 0
+  while (i + n < s.length && s.charCodeAt(i + n) === ch) {
+    n++
+  }
+  return n
+}
 function pad(n: number): string {
   return n < 10 ? "0" + n : n.toString()
-}
-export function getShortYear(y: number, full?: boolean): string {
-  if (y <= 99 && y >= -99) {
-    return y.toString()
-  }
-  const s = y.toString()
-  return s.substring(s.length - 2)
-}
-
-function y1(d: Date): string {
-  return yyyymmdd(d, "-")
-}
-function y2(d: Date): string {
-  return yyyymmdd(d, "/")
-}
-
-const fMap = new Map<string, (d: Date) => string>([
-  ["yyyy-MM-dd", y1],
-  ["yyyy/MM/dd", y2],
-])
-
-export function formatDate(d: Date, format: string): string {
-  let fn = fMap.get(format)
-  if (fn) {
-    return fn(d)
-  }
-  return yyyymmdd(d, "-")
 }
