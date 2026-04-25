@@ -1,6 +1,6 @@
 {
-  "name": "xvalidators",
-  "version": "0.5.20",
+  "name": "validation-core",
+  "version": "1.1.0",
   "description": "Validate data",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
@@ -20,8 +20,13 @@
     "url": "git@github.com/core-ts/validation"
   },
   "keywords": [
-    "validator",
-    "validators",
-    "xvalidators"
+    "validation",
+    "validation utilities",
+    "validation-utilities",
+    "validation-util",
+    "validation-core",
+    "validation core",
+    "core-validation",
+    "core validation"
   ]
 }

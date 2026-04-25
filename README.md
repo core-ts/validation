@@ -1,5 +1,5 @@
-# xvalidators
-- xvalidators is a lightweight JavaScript validation library designed for validating objects, arrays, and deeply nested data structures.
+# validation-core
+- validation-core is a lightweight JavaScript validation library designed for validating objects, arrays, and deeply nested data structures.
 - It supports built-in rules with fully customizable error messages:
   - type (string, Date, number, integer, boolean)
   - format (email, phone number, URL, IP Address, RegExp)
@@ -181,7 +181,7 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 
 <tr>
 <td>🥈 2</td>
-<td>xvalidators</td>
+<td>validation-core</td>
 <td>1,246,188</td>
 <td>1.29%</td>
 <td>92</td>
@@ -246,14 +246,14 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 - Top performer with ~6.09 million ops/sec.
 - Best for JSON Schema validation, high-throughput services.
 - Ideal for performance-critical Node.js or edge runtimes.
-#### ✅ xvalidators
+#### ✅ validation-core
 - ~4.9x slower than Ajv, but ~1.3x faster than Zod, and even faster than Valibot.
-- xvalidators is focused on bundle small size + performance, good for frontend.
+- validation-core is focused on bundle small size + performance, good for frontend.
 - Excellent TypeScript inference, flexible custom rules.
 - Very good for internal tools, low-code platforms, or apps that require typed validation
 #### ⚖️ Zod vs. Valibot
 - Nearly similar in ops/sec, suggesting similar architecture or design trade-offs.
-- Good for TypeScript-first developer experience but noticeably slower than Ajv/xvalidators.
+- Good for TypeScript-first developer experience but noticeably slower than Ajv/validation-core.
 - Both offer great DX.
 - Valibot is focused on bundle size + performance, good for frontend.
 - Zod still preferred if you need ecosystem maturity and developer ergonomics.
@@ -278,7 +278,7 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 
 <tr>
 <td>Minimal frontend apps with type-safe apps and custom rules</td>
-<td><b>xvalidators</b></td>
+<td><b>validation-core</b></td>
 <td>Good speed, excellent TypeScript integration</td>
 </tr>
 
@@ -310,7 +310,7 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 
 ### 📌 Summary
 - If you need speed: → Ajv
-- If you want typescript + good speed + small: → xvalidators
+- If you want typescript + good speed + small: → validation-core
 - If you prefer a big community support over speed: → Zod or Valibot
 - If you already use Formik or legacy stack: → Yup or Joi
 
@@ -321,7 +321,7 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 <tr>
 <th>Feature / Library</th>
 <th><b>Ajv</b></th>
-<th><b>xvalidators</b></th>
+<th><b>validation-core</b></th>
 <th><b>Zod</b></th>
 <th><b>Valibot</b></th>
 <th><b>Joi</b></th>
@@ -545,7 +545,7 @@ See the benchmark source code at [data-validation-benchmark](https://github.com/
 ## 🧱 Samples
 ### Sample 1
 ```typescript
-import { Attributes, StringMap, validate } from "xvalidators"
+import { Attributes, StringMap, validate } from "validation-core"
 
 interface Resources {
   [key: string]: StringMap
@@ -773,7 +773,7 @@ Validate Tony Stark (no error):  []
 ```
 ### Sample 2
 ```typescript
-import { Attributes, StringMap, validate } from "xvalidators"
+import { Attributes, StringMap, validate } from "validation-core"
 
 interface Resources {
   [key: string]: StringMap
