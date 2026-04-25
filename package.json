@@ -1,6 +1,6 @@
 {
   "name": "xvalidators",
-  "version": "0.5.19",
+  "version": "0.5.20",
   "description": "Validate data",
   "main": "./lib/index.js",
   "types": "./src/index.ts",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/core-ts/validator"
+    "url": "git@github.com/core-ts/validation"
   },
   "keywords": [
     "validator",
